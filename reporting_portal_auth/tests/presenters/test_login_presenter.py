@@ -47,7 +47,7 @@ class TestLoginPresenter:
             UserAuthTokensDTO,
             UserDTO
         )
-        role = Role.get_list_of_tuples()
+        role = 'USER'
         user_token_dto = UserAuthTokensDTO(user_id=1,
                                            access_token='XpCbV4bTl6v43HTsexE1SUxoNiO7qG',
                                            refresh_token='amNMDAKB1hMgMpHzjxr6rzHTz59SJo',

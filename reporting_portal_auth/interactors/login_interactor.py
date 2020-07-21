@@ -31,15 +31,15 @@ class LoginInteractor:
             user_dto = self.user_login(username=username,
                                        password=password)
 
-            return presenter.get_user_token_response(user_dto)
+            response = presenter.get_user_token_response(user_dto)
 
         except InvalidUserName:
-            presenter.raise_invalid_user_name_exception(username=username)
+            response = presenter.raise_invalid_user_name_exception(username=username)
         except InvalidPassword:
-            presenter.raise_invalid_password_exception(password=password)
+            response = presenter.raise_invalid_password_exception(password=password)
+        return response
 
     def user_login(self, username: str, password: str):
-
         self.storage.validate_user_name(username=username)
         user_id = self.storage.validate_password(username=username,
                                                  password=password)

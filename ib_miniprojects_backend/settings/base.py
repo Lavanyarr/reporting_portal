@@ -338,4 +338,10 @@ TEST_RUNNER = 'snapshottest.django.TestRunner'
 MOCK_X_IB_REQUEST_ID = True
 
 STAGE = os.environ.get("STAGE", "local")
-TH_USER_MODEL = 'reporting_portal.User'
+AUTH_USER_MODEL = 'reporting_portal_auth.User'
+DEFAULT_OAUTH_APPLICATION_NAME = 'reporting_portal_auth'
+DEFAULT_OAUTH_CLIENT_ID = ""
+DEFAULT_OAUTH_CLIENT_SECRET = ''
+DEFAULT_OAUTH_SCOPES = "read write"
+DEFAULT_ACCESS_TOKEN_EXPIRY_IN_SECONDS = 100000000000
+
