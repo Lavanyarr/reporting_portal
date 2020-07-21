@@ -1,0 +1,110 @@
+{
+        "swagger": "2.0",
+        "host": "127.0.0.1:8000",
+        "basePath": "/api/reporting_portal_auth/",
+        "info": {
+            "version": "1.0.0",
+            "title": "Simple API",
+            "description": "A simple API to learn how to write OpenAPI Specification"
+        },
+        "schemes": [
+            "http"
+        ],
+        "consumes": [
+            "application/json"
+        ],
+        "produces": [
+            "application/json"
+        ],
+        "securityDefinitions": {
+            "oauth": {
+                "tokenUrl": "http://auth.ibtspl.com/oauth2/",
+                "flow": "password",
+                "scopes": {
+                    "read": "read users",
+                    "write": "create users",
+                    "update": "update users",
+                    "delete": "delete users"
+                },
+                "type": "oauth2"
+            }
+        },
+        "security": [],
+        "definitions": {
+            "UserDetails": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "username",
+                    "password"
+                ]
+            },
+          "UserTokens": {
+            "type": "object",
+            "properties": {
+              "Access_token": {
+                "type": "string"
+              },
+              "Refresh_token": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "Access_token",
+              "Refresh_token"
+            ]
+          }
+        },
+        "parameters": {
+            "UserCredentailsParameters": {
+                "name": "user credentails",
+                "in": "body",
+                "description": "Valid User credentails to create user entry",
+                "schema": {
+                    "$ref": "#/definitions/UserDetails"
+                }
+
+            }
+        },
+        "responses": {
+          "UserTokenResponses": {
+            "description": "success response",
+            "schema": {
+              "$ref": "#/definitions/UserTokens"
+            }
+          }
+        },
+        "paths": {
+            "/user/login/v1": {
+                "post": {
+                    "summary": "create a user entry",
+                    "description": "create a user entry in a datebase with valid values",
+                    "operationId": "Create_User",
+                     "security": [{
+                        "oauth": [
+                            "read",
+                            "write"
+                        ]
+                    }],
+                    "parameters": [
+                        {
+                            "$ref": "#/parameters/UserCredentailsParameters"
+                        }
+                    ],
+                  "responses": {
+                    "200": {
+                      "$ref": "#/responses/UserTokenResponses"
+                    }
+                  }
+                }
+            }
+        }
+    }
+    

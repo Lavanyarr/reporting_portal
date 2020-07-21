@@ -31,71 +31,547 @@
         },
         "security": [],
         "definitions": {
-            "TodoId": {
+            "SortFilterDetails": {
                 "type": "object",
                 "properties": {
-                    "id": {
-                        "type": "integer"
+                    "sort_type": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "ASC",
+                                "DESC"
+                            ]
+                        }
+                    },
+                    "filter_type": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "REPORTED",
+                                "ALL",
+                                "ACTION_IN_PROGRESS",
+                                "RESOLVED",
+                                "ACKNOWLEDGED_BY_RP"
+                            ]
+                        }
+                    },
+                    "sort_field": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "REPORTED_ON",
+                                "DUE_DATE"
+                            ]
+                        }
                     }
-                }
+                },
+                "required": [
+                    "sort_type",
+                    "filter_type",
+                    "sort_field"
+                ]
+
             },
-            "BasicTodo": {
+            "UserDetails": {
                 "type": "object",
                 "properties": {
-                    "description": {
+                    "user_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
                         "type": "string"
                     },
-                    "is_completed": {
-                        "type": "boolean"
+                    "phone_no": {
+                        "type": "integer",
+                        "format": "int64"
                     },
-                    "remind_at": {
+                    "profile_pic": {
                         "type": "string"
                     }
                 },
                 "required": [
-                    "description"
+                    "user_id",
+                    "name",
+                    "phone_no",
+                    "profile_pic"
                 ]
             },
-            "Todo": {
+            "UserObservations": {
+                "type": "object",
+                "properties": {
+                    "observation_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "reported_on": {
+                        "type": "string",
+                        "format": "date"
+                   },
+                    "severity": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "HIGH",
+                                "LOW",
+                                "WARNING"
+                            ]
+                        }
+                    },
+                    "status": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "ALL",
+                                "REPORTED",
+                                "ACTION_IN_PROGRESS",
+                                "RESOLVED",
+                                "ACKNOWLEDGED_BY_RP"
+                            ]
+                        }
+                    },
+                    "due_date": {
+                        "type": "string",
+                        "format":"date"
+                    },
+                    "show_due_date": {
+                        "type": "boolean"
+                    }
+            },
+            "required": [
+                "observation_id",
+                "title",
+                "reported_on",
+                "severity",
+                "status",
+                "due_date",
+                "show_due_date"
+            ]
+
+        },
+            "SubCategories": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "name"
+                ]
+            },
+            "UserDetailsWithAssignedTo": {
                 "allOf": [
                     {
-                        "$ref": "#/definitions/BasicTodo"
+                        "$ref": "#/definitions/UserObservations"
                     },
                     {
-                        "$ref": "#/definitions/TodoId"
+                        "type": "object",
+                        "properties": {
+                            "assigned_to": {
+                                "$ref": "#/definitions/UserDetails"
+                            },
+                            "messages_count": {
+                                "type": "integer",
+                                "format": "int64"
+                            }
+                        },
+                        "required":[
+                            "assigned_to",
+                            "messages_count"
+                          ]
                     }
+                ]
+            },
+            "RpObservationsWithReportedBy": {
+                "allOf": [
+                    {
+                        "$ref": "#/definitions/UserObservations"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "reported_by": {
+                                "$ref": "#/definitions/UserDetails"
+                            },
+                            "messages_count": {
+                                "type": "integer",
+                                "format": "int64"
+                            }
+                        },
+                        "required":[
+                            "reported_by",
+                            "messages_count"
+
+                          ]
+                    }
+                ]
+            },
+
+            "CategoriesAndSubCategories": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "subcategories": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/SubCategories"
+                        }
+                    }
+                },
+                "required": [
+                    "id",
+                    "name",
+                    "subcategories"
+                ]
+            },
+            "Categories": {
+                "type": "object",
+                "properties": {
+                    "categories": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/CategoriesAndSubCategories"
+                        }
+                    }
+
+                },
+                "required": [
+                    "categories"
+                ]
+            },
+            "GetObservationDetails": {
+                "allOf": [
+                    {
+                       "$ref": "#/definitions/UserObservations"
+                    },
+                    {
+                        "$ref": "#/definitions/Categories"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "description": {
+                                "type": "string"
+                            },
+                            "assigned_to": {
+                                "type": "array",
+                                "items": {
+                                     "$ref": "#/definitions/UserDetails"
+                                }
+                            },
+                            "attachments": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "due_date_privacy": {
+                                "type": "boolean"
+                            }
+                        },
+                        "required": [
+                            "description",
+                            "assigned_to",
+                            "attachments",
+                            "due_date_privacy"
+                        ]
+                    }
+
+                ]
+            },
+            "ObservationId": {
+                "type": "object",
+                "properties": {
+                    "observation_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                },
+                "required": [
+                    "observation_id"
+                ]
+
+            },
+            "CreateObservation": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "category_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "sub_category_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "severity": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "HIGH",
+                                "LOW",
+                                "WARNING"
+                            ]
+                        }
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "attachments": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "required": [
+                    "title",
+                    "category_id",
+                    "sub_category_id",
+                    "severity",
+                    "description",
+                    "attachments"
+                ]
+            },
+            "UpdateObservation": {
+                "type": "object",
+                "properties": {
+                    "observation_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "status": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "REPORTED",
+                                "ALL",
+                                "ACTION_IN_PROGRESS",
+                                "RESOLVED",
+                                "ACKNOWLEDGED_BY_RP"
+                            ]
+                        }
+                    },
+                    "assigned_to": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "due_date_privacy": {
+                        "type": "boolean"
+                    }
+
+                },
+                "required": [
+                    "observation_id",
+                    "status",
+                    "assigned_to",
+                    "due_date_privacy"
                 ]
             }
         },
         "parameters": {
-            "TodoId": {
-                "description": "todo id",
-                "in": "path",
-                "name": "id",
-                "required": true,
-                "type": "integer"
+            "OffsetParameter" : {
+                "name": "offset",
+                "in": "query",
+                "description": "offset is used to display the observations using pagination",
+                "type": "integer",
+                "format": "int64"
             },
-            "BasicTodo": {
-                "description": "Todo Parameter",
+            "LimitParameter": {
+                "name": "limit",
+                "in": "query",
+                "description": "limit is used to display the observation using pagination",
+                "type": "integer",
+                "format": "int64"
+
+            },
+            "SortAndFilterParameter": {
+                "name": "filter_with_sorting",
                 "in": "body",
-                "name": "todo",
-                "required": true,
+                "description": "Sorting type and filters to display the result",
                 "schema": {
-                    "$ref": "#/definitions/BasicTodo"
+                    "$ref":"#/definitions/SortFilterDetails"
+                }
+            },
+            "ObservationIdParameter": {
+                "name": "observationId",
+                "in": "body",
+                "description": "Observation id to get the observation details",
+                "schema": {
+                    "$ref": "#/definitions/ObservationId"
+                }
+            },
+            "CreateObservation": {
+                "name": "create observation",
+                "in": "body",
+                "description": "create a observation",
+                "schema": {
+                    "$ref": "#/definitions/CreateObservation"
+                }
+            },
+            "UpdateObservation": {
+                 "name": "update observation",
+                "in": "body",
+                "description": "update a observation",
+                "schema": {
+                    "$ref": "#/definitions/UpdateObservation"
                 }
             }
+
         },
         "responses": {
-            "SuccessResponse": {
-                "description": "success response"
+            "MyObservationResponse": {
+                "description": "success response",
+                "schema": {
+                  "type":"array",
+                  "items":{
+                    "$ref": "#/definitions/UserDetailsWithAssignedTo"
+                  }
+
+                }
+            },
+            "AssignedObservationResponse": {
+                "description": "success response",
+                "schema": {
+                    "type":"array",
+                  "items":{
+                    "$ref": "#/definitions/RpObservationsWithReportedBy"
+                  }
+                }
+
+            },
+            "CategoriesWithSubcategoriesResponse": {
+                "description": "success response",
+                "schema": {
+                    "$ref": "#/definitions/Categories"
+                }
+            },
+            "ObservationDetailsResponse": {
+                "description": "success response",
+                "schema": {
+                     "type":"array",
+                      "items":{
+                        "$ref": "#/definitions/GetObservationDetails"
+                      }
+
+                }
+
+            },
+            "InvalidObservationId": {
+                "description": "Invalid ObservationId",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "response": {
+                            "type": "string"
+                        },
+                        "https_status_code": {
+                            "type": "integer"
+                        },
+                        "res_status": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "response",
+                        "https_status_code",
+                        "res_status"
+                    ]
+                }
+            },
+            "InvalidDetails": {
+                "description": "Invalid Limit and Offset",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "response": {
+                            "type": "string"
+                        },
+                        "https_status_code": {
+                            "type": "integer"
+                        },
+                        "res_status": {
+                            "type": "string",
+                            "enum": [
+                                "Invalid Limit",
+                                "Invalid Offset"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "response",
+                        "https_status_code",
+                        "res_status"
+                    ]
+
+                }
             }
+
         },
         "paths": {
-            "/todos/": {
+            "/get_observations/v1": {
                 "get": {
-                    "summary": "Get all todos",
-                    "description": "Returns a list containing all todos.",
-                    "operationId": "get_todos",
+                    "summary": "Get My Observations",
+                    "description": "Get observations which are submitted by them",
+                    "operationId": "get_my_observations",
+                    "security": [{
+                        "oauth": [
+                            "read"
+                        ]
+                    }],
+                    "parameters": [
+                        {
+                            "$ref": "#/parameters/OffsetParameter"
+                        },
+                        {
+                            "$ref": "#/parameters/LimitParameter"
+
+                        },
+                        {
+                            "$ref": "#/parameters/SortAndFilterParameter"
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "$ref": "#/responses/MyObservationResponse"
+
+                        },
+                        "400": {
+                            "$ref": "#/responses/InvalidDetails"
+                        }
+                    }
+                }
+
+            },
+            "/get_categories_with_subcategories/v1": {
+                "get": {
+                    "summary": "Get categories ,subcategories",
+                    "description": "get categories along with its subcategories  of observation",
+                    "operationId": "Get_categories_with_subcategories",
                     "security": [
                         {
                             "oauth": [
@@ -103,110 +579,122 @@
                             ]
                         }
                     ],
+                    "parameters": [],
                     "responses": {
                         "200": {
-                            "description": "A list of todos",
-                            "schema": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/definitions/Todo"
-                                }
-                            }
+                            "$ref": "#/responses/CategoriesWithSubcategoriesResponse"
                         }
                     }
-                },
-                "post": {
-                    "summary": "create a todo",
-                    "description": "Create a todo",
-                    "operationId": "create_todo",
-                    "security": [
-                        {
-                            "oauth": [
-                                "write"
-                            ]
-                        }
-                    ],
+                }
+
+            },
+            "/get_observations_of_rp/v1": {
+                "get": {
+                    "summary": "Get Rp assigned Observations",
+                    "description": "Get observations which are assigned to rp",
+                    "operationId": "get_rp_assigned_observations",
+                    "security": [{
+                        "oauth": [
+                            "read"
+                        ]
+                    }],
                     "parameters": [
                         {
-                            "$ref": "#/parameters/BasicTodo"
+                            "$ref": "#/parameters/OffsetParameter"
+                        },
+                        {
+                            "$ref": "#/parameters/LimitParameter"
+
+                        },
+                        {
+                            "$ref": "#/parameters/SortAndFilterParameter"
                         }
                     ],
                     "responses": {
                         "200": {
-                            "description": "create a todo",
-                            "schema": {
-                                "$ref": "#/definitions/TodoId"
-                            }
+                            "$ref": "#/responses/AssignedObservationResponse"
+
+                        }
+                    }
+                }
+
+            },
+            "/get_observation_details/v1": {
+                "get": {
+                    "summary": "Get Observations Details",
+                    "description": "Get observations Details which are submitted",
+                    "operationId": "get_observations_details",
+                    "security": [{
+                        "oauth": [
+                            "read"
+                        ]
+                    }],
+                    "parameters": [
+                        {
+                            "$ref": "#/parameters/ObservationIdParameter"
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "$ref": "#/responses/ObservationDetailsResponse"
+                        },
+                        "404": {
+                            "$ref": "#/responses/InvalidObservationId"
                         }
                     }
                 }
             },
-            "/todos/{id}/": {
-                "parameters": [
-                    {
-                        "$ref": "#/parameters/TodoId"
-                    }
-                ],
-                "get": {
-                    "summary": "Get a todo",
-                    "description": "Returns a todo.",
-                    "operationId": "get_todo",
-                    "security": [
-                        {
-                            "oauth": [
-                                "read"
-                            ]
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "A todo",
-                            "schema": {
-                                "$ref": "#/definitions/Todo"
-                            }
-                        }
-                    }
-                },
-                "put": {
+            "/create_observation/v1": {
+                "post": {
+                    "summary": "Create Observation",
+                    "description": "create a observation when you see any deviations in people",
+                    "operationId": "create_observation",
+                     "security": [{
+                        "oauth": [
+                            "read"
+                        ]
+                    }],
                     "parameters": [
                         {
-                            "$ref": "#/parameters/BasicTodo"
-                        }
-                    ],
-                    "summary": "Updates a todo",
-                    "description": "Updates a todo.",
-                    "operationId": "update_todo",
-                    "security": [
-                        {
-                            "oauth": [
-                                "update"
-                            ]
+                             "$ref": "#/parameters/CreateObservation"
                         }
                     ],
                     "responses": {
                         "200": {
-                            "$ref": "#/responses/SuccessResponse"
-                        }
-                    }
-                },
-                "delete": {
-                    "summary": "Deletes a todo",
-                    "description": "Deletes a todo.",
-                    "operationId": "delete_todo",
-                    "security": [
-                        {
-                            "oauth": [
-                                "delete"
-                            ]
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "$ref": "#/responses/SuccessResponse"
+                            "description": "successfully created"
                         }
                     }
                 }
+
+            },
+            "/update_observation/v1": {
+                "put": {
+                    "summary": "Update Observation",
+                    "description": "update a observation which is submitted",
+                    "operationId": "update_observation",
+                     "security": [{
+                        "oauth": [
+                            "read",
+                            "write"
+                        ]
+                    }],
+                    "parameters": [
+                        {
+                             "$ref": "#/parameters/UpdateObservation"
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "successfully updated"
+                        },
+                        "404": {
+                            "$ref": "#/responses/InvalidObservationId"
+                        }
+                    }
+                }
+
             }
+
+
         }
-    }
-    
+}
