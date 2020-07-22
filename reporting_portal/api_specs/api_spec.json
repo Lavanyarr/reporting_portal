@@ -1,6 +1,6 @@
 {
         "swagger": "2.0",
-        "host": "127.0.0.1:8000",
+        "host": "localhost:8080",
         "basePath": "/api/reporting_portal/",
         "info": {
             "version": "1.0.0",
@@ -196,6 +196,26 @@
                     }
                 ]
             },
+            "UserDetailsWithPaginationValue":{
+              "type": "object",
+              "properties":{
+                "total_observations_count":{
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "observation_details":{
+                  "type":"array",
+                  "items":{
+                    "$ref":"#/definitions/UserDetailsWithAssignedTo"
+                  }
+                }
+              },
+              "required":[
+                "total_observations_count",
+                "observation_details"
+                ]
+
+            },
             "RpObservationsWithReportedBy": {
                 "allOf": [
                     {
@@ -220,7 +240,26 @@
                     }
                 ]
             },
+            "RpDetailsWithPaginationValue":{
+              "type": "object",
+              "properties":{
+                "total_observations_count":{
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "observation_details":{
+                  "type":"array",
+                  "items":{
+                    "$ref":"#/definitions/RpObservationsWithReportedBy"
+                  }
+                }
+              },
+              "required":[
+                "total_observations_count",
+                "observation_details"
+                ]
 
+            },
             "CategoriesAndSubCategories": {
                 "type": "object",
                 "properties": {
@@ -426,7 +465,7 @@
                 }
             },
             "CreateObservation": {
-                "name": "create observation",
+                "name": "create_observation",
                 "in": "body",
                 "description": "create a observation",
                 "schema": {
@@ -434,7 +473,7 @@
                 }
             },
             "UpdateObservation": {
-                 "name": "update observation",
+                 "name": "update_observation",
                 "in": "body",
                 "description": "update a observation",
                 "schema": {
@@ -447,20 +486,14 @@
             "MyObservationResponse": {
                 "description": "success response",
                 "schema": {
-                  "type":"array",
-                  "items":{
-                    "$ref": "#/definitions/UserDetailsWithAssignedTo"
-                  }
+                    "$ref": "#/definitions/UserDetailsWithPaginationValue"
 
                 }
             },
             "AssignedObservationResponse": {
                 "description": "success response",
                 "schema": {
-                    "type":"array",
-                  "items":{
-                    "$ref": "#/definitions/RpObservationsWithReportedBy"
-                  }
+                    "$ref": "#/definitions/RpDetailsWithPaginationValue"
                 }
 
             },

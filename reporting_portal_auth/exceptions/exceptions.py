@@ -4,3 +4,8 @@ class InvalidUserName(Exception):
 
 class InvalidPassword(Exception):
     pass
+
+
+class InvalidUserIds(Exception):
+    pass
+

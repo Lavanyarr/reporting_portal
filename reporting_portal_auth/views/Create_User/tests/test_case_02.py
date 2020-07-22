@@ -23,6 +23,8 @@ TEST_CASE = {
 }
 
 from reporting_portal_auth.tests.factories.storage_dtos import UserFactory
+
+
 class TestCase02CreateUserAPITestCase(CustomAPITestCase):
     app_name = APP_NAME
     operation_name = OPERATION_NAME
@@ -30,10 +32,12 @@ class TestCase02CreateUserAPITestCase(CustomAPITestCase):
     url_suffix = URL_SUFFIX
     test_case_dict = TEST_CASE
 
-
     def test_case(self):
         UserFactory.reset_sequence()
         user = UserFactory(username="lavanya", password='lavanya1')
+        user.set_password('lavanya1')
+        user.save()
+
         self.default_test_case()  # Returns response object.
         # Which can be used for further response object checks.
         # Add database state checks here.

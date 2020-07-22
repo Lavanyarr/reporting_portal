@@ -26,3 +26,4 @@ class PresenterInterface(abc.ABC):
     def get_user_token_response(
             self, user_dto: UserDTO) -> response.HttpResponse:
         pass
+

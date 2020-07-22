@@ -1,5 +1,10 @@
 import abc
+from typing import List
+
 from reporting_portal_auth.constants.enums import Role
+
+from reporting_portal_auth.storages.dtos import UserDTO
+
 
 class StorageInterface(abc.ABC):
 
@@ -8,9 +13,13 @@ class StorageInterface(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def validate_password(self, username: str, password:str):
+    def validate_password(self, username: str, password: str):
         pass
 
     @abc.abstractmethod
-    def get_user_role(self, user_id: int)-> Role:
+    def get_user_role(self, user_id: int) -> Role:
+        pass
+
+    @abc.abstractmethod
+    def get_user_dtos(self, user_ids: List[int]) -> List[UserDTO]:
         pass

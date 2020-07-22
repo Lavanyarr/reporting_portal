@@ -34,6 +34,8 @@ class TestCase02CreateUserAPITestCase(CustomAPITestCase):
     def test_case(self):
         UserFactory.reset_sequence()
         user = UserFactory.create(username="lavanya", password="lavanya1")
+        user.set_password('lavanya1')
+        user.save()
         self.default_test_case()  # Returns response object.
         # Which can be used for further response object checks.
         # Add database state checks here.

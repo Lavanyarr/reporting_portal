@@ -9,12 +9,12 @@ from reporting_portal_auth.presenters.presenter_implementation \
 from common.oauth2_storage import OAuth2SQLStorage
 from reporting_portal_auth.interactors.login_interactor import LoginInteractor
 
+
 @validate_decorator(validator_class=ValidatorClass)
 def api_wrapper(*args, **kwargs):
     request_data = kwargs['request_data']
     username = request_data['username']
     password = request_data['password']
-
 
     storage = StorageImplementation()
     presenter = PresenterImplementation()
@@ -25,9 +25,9 @@ def api_wrapper(*args, **kwargs):
         oauth_storage=oauthstorage
     )
 
-    result = interactors.user_login_wrapper(
+    response = interactors.user_login_wrapper(
         username=username,
         password=password,
         presenter=presenter
     )
-    return result
+    return response

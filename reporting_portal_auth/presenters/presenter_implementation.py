@@ -22,7 +22,8 @@ class PresenterImplementation(PresenterInterface):
                 "response": INVALID_USERNAME[0],
                 "res_status": 404,
                 "res_status":INVALID_USERNAME[1]
-            })
+            }),
+            status=404
         )
         return response_object
 
@@ -33,7 +34,8 @@ class PresenterImplementation(PresenterInterface):
                 "response": INVALID_PASSWORD[0],
                 "res_status": 404,
                 "res_status": INVALID_PASSWORD[1]
-            })
+            }),
+            status=404
         )
         return response_object
 

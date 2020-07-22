@@ -12,3 +12,16 @@ class CodeLanguage(BaseEnumClass, enum.Enum):
     python38 = "PYTHON38"
     python38_datascience = "PYTHON38_DATASCIENCE"
     python38_aiml = "PYTHON38_AIML"
+
+class Status(BaseEnumClass, enum.Enum):
+    ALL = "ALL"
+    ACTION_IN_PROGRESS = "ACTION_IN_PROGRESS"
+    ACKNOWLEDGE_BY = "ACKNOWLEDGE_BY"
+    RESOLVED = "RESOLVED"
+    CLOSED = "CLOSED"
+
+
+class Severity(BaseEnumClass, enum.Enum):
+    HIGH = "HIGH"
+    LOW = "LOW"
+    WARNING = "WARNING"
