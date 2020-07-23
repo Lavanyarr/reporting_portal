@@ -35,18 +35,16 @@
                 "type": "object",
                 "properties": {
                     "sort_type": {
-                        "type": "array",
-                        "items": {
+
                             "type": "string",
                             "enum": [
                                 "ASC",
                                 "DESC"
                             ]
-                        }
+
                     },
                     "filter_type": {
-                        "type": "array",
-                        "items": {
+
                             "type": "string",
                             "enum": [
                                 "REPORTED",
@@ -55,17 +53,16 @@
                                 "RESOLVED",
                                 "ACKNOWLEDGED_BY_RP"
                             ]
-                        }
+
                     },
                     "sort_field": {
-                        "type": "array",
-                        "items": {
+
                             "type": "string",
                             "enum": [
                                 "REPORTED_ON",
                                 "DUE_DATE"
                             ]
-                        }
+
                     }
                 },
                 "required": [
@@ -407,11 +404,8 @@
                 },
                 "required": [
                     "title",
-                    "category_id",
-                    "sub_category_id",
                     "severity",
-                    "description",
-                    "attachments"
+                    "description"
                 ]
             },
             "UpdateObservation": {
@@ -672,7 +666,7 @@
             },
             "/get_observation_details/v1": {
                 "get": {
-                    "summary": "Get Observations_Details",
+                    "summary": "Get Observations Details",
                     "description": "Get observations Details which are submitted",
                     "operationId": "get_observations_details",
                     "security": [{
@@ -720,7 +714,7 @@
             },
             "/update_observation/v1": {
                 "put": {
-                    "summary": "Update_Observation",
+                    "summary": "Update Observation",
                     "description": "update a observation which is submitted",
                     "operationId": "update_observation",
                      "security": [{
