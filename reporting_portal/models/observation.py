@@ -5,14 +5,23 @@ from reporting_portal.models import (
     Category,
     SubCategory
 )
-from reporting_portal.constants.enums import SEVERITY
+from reporting_portal.constants.enums import (
+    Severity,
+    Status
+)
 
-severity = SEVERITY.get_list_of_tuples()
 
+SEVERITY = Severity.get_list_of_tuples()
+STATUS =  Status.get_list_of_tuples()
 
 class Observation(models.Model):
     title = models.CharField(max_length=20)
     description = models.TextField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
-    severity = models.CharField(max_length=20, choices=severity)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    subcategory = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True)
+    severity = models.CharField(max_length=20, choices=SEVERITY)
+    status = models.CharField(max_length=20, choices=STATUS, default='REPORTED')
+    assigned_to = models.IntegerField(null=True)
+    reported_on = models.DateField(null=True)
+    due_date = models.DateField(null=True)
+    reported_by = models.IntegerField(null=True)

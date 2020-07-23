@@ -13,28 +13,18 @@ RESPONSE_200_JSON = """
         "observation_id": 1,
         "title": "string",
         "reported_on": "2099-12-31",
-        "severity": [
-            "HIGH"
-        ],
-        "status": [
-            "ALL"
-        ],
+        "severity": "HIGH",
+        "status": "ALL",
         "due_date": "2099-12-31",
         "show_due_date": true,
-        "categories": [
-            {
-                "id": 1,
-                "name": "string",
-                "subcategories": [
-                    {
-                        "id": 1,
-                        "name": "string"
-                    }
-                ]
-            }
-        ],
         "description": "string",
-        "assigned_to": [
+        "category": "string",
+        "subcategory": "string",
+        "assigned_to": {
+            "id": 1,
+            "name": "string"
+        },
+        "remaining_rps": [
             {
                 "user_id": 1,
                 "name": "string",

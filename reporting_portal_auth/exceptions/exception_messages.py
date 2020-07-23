@@ -13,7 +13,3 @@ INVALID_USER_IDS = (
     'INVALID_USER_IDS'
 )
 
-INVALID_CATEGORY_ID = (
-    'category_id is invalid try to give valid category_id'
-    'INVALID_CATEGORY_ID'
-)

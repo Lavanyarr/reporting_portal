@@ -18,7 +18,7 @@ snapshots['TestCase01CreateUserAPITestCase::test_case body'] = {
 snapshots['TestCase01CreateUserAPITestCase::test_case header_params'] = {
     'allow': (
         'Allow',
-        'OPTIONS, POST'
+        'POST, OPTIONS'
     ),
     'content-language': (
         'Content-Language',

@@ -13,7 +13,7 @@ class PresenterImplementation(UserDetailsPresenterInterface):
         response_object = response.HttpResponse(
             json.dumps({
                 "response": INVALID_USER_IDS[0],
-                "res_status": 404,
+                "https_status_code": 404,
                 "res_status": INVALID_USER_IDS[1]
             })
         )

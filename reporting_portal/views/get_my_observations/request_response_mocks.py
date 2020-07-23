@@ -23,12 +23,8 @@ RESPONSE_200_JSON = """
             "observation_id": 1,
             "title": "string",
             "reported_on": "2099-12-31",
-            "severity": [
-                "HIGH"
-            ],
-            "status": [
-                "ALL"
-            ],
+            "severity": "HIGH",
+            "status": "ALL",
             "due_date": "2099-12-31",
             "show_due_date": true,
             "assigned_to": {

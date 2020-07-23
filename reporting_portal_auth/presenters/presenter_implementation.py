@@ -20,7 +20,7 @@ class PresenterImplementation(PresenterInterface):
         response_object = response.HttpResponse(
             json.dumps({
                 "response": INVALID_USERNAME[0],
-                "res_status": 404,
+                "https_status_code": 404,
                 "res_status":INVALID_USERNAME[1]
             }),
             status=404
@@ -32,7 +32,7 @@ class PresenterImplementation(PresenterInterface):
         response_object = response.HttpResponse(
             json.dumps({
                 "response": INVALID_PASSWORD[0],
-                "res_status": 404,
+                "https_status_code": 404,
                 "res_status": INVALID_PASSWORD[1]
             }),
             status=404

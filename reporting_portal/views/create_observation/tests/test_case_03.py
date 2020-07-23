@@ -4,12 +4,18 @@
 
 from django_swagger_utils.utils.test import CustomAPITestCase
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
-from reporting_portal.tests.factories.storage_factories import (
-    CategoryFactory,
-    SubCategoryFactory
-)
-REQUEST_BODY = """
 
+REQUEST_BODY = """
+{
+    "title": "string",
+    "category_id": 1,
+    "sub_category_id": 1,
+    "severity": "HIGH",
+    "description": "string",
+    "attachments": [
+        "string"
+    ]
+}
 """
 
 TEST_CASE = {
@@ -23,7 +29,7 @@ TEST_CASE = {
 }
 
 
-class TestCase01GetCategoriesWithSubcategoriesAPITestCase(CustomAPITestCase):
+class TestCase03CreateObservationAPITestCase(CustomAPITestCase):
     app_name = APP_NAME
     operation_name = OPERATION_NAME
     request_method = REQUEST_METHOD
@@ -31,12 +37,19 @@ class TestCase01GetCategoriesWithSubcategoriesAPITestCase(CustomAPITestCase):
     test_case_dict = TEST_CASE
 
     def setupUser(self, username, password):
-        super(TestCase01GetCategoriesWithSubcategoriesAPITestCase,self).setupUser(
-            username=username, password=password)
+        super(TestCase03CreateObservationAPITestCase, self).setupUser(
+            username=username, password=password
+    )
+
 
     def test_case(self):
+
+        from reporting_portal.tests.factories.storage_factories \
+            import CategoryFactory, SubCategoryFactory
         CategoryFactory.reset_sequence()
-        category = CategoryFactory.create_batch(2)
         SubCategoryFactory.reset_sequence()
-        SubCategoryFactory.create_batch(2, category_id=1)
+        CategoryFactory.create()
+        SubCategoryFactory.create(category_id=1)
         self.default_test_case() # Returns response object.
+        # Which can be used for further response object checks.
+        # Add database state checks here.

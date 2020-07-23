@@ -15,11 +15,31 @@ snapshots['TestCase01GetCategoriesWithSubcategoriesAPITestCase::test_case body']
             'id': 1,
             'name': 'category_1',
             'subcategories': [
+                {
+                    'id': 1,
+                    'name': 'sub_category_1'
+                },
+                {
+                    'id': 2,
+                    'name': 'sub_category_2'
+                }
             ]
         },
         {
             'id': 2,
             'name': 'category_2',
+            'subcategories': [
+            ]
+        },
+        {
+            'id': 3,
+            'name': 'category_3',
+            'subcategories': [
+            ]
+        },
+        {
+            'id': 4,
+            'name': 'category_4',
             'subcategories': [
             ]
         }
@@ -29,7 +49,7 @@ snapshots['TestCase01GetCategoriesWithSubcategoriesAPITestCase::test_case body']
 snapshots['TestCase01GetCategoriesWithSubcategoriesAPITestCase::test_case header_params'] = {
     'allow': (
         'Allow',
-        'GET, OPTIONS'
+        'OPTIONS, GET'
     ),
     'content-language': (
         'Content-Language',
@@ -37,7 +57,7 @@ snapshots['TestCase01GetCategoriesWithSubcategoriesAPITestCase::test_case header
     ),
     'content-length': (
         'Content-Length',
-        '124'
+        '304'
     ),
     'content-type': (
         'Content-Type',

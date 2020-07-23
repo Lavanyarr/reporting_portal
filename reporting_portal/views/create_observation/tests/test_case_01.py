@@ -8,11 +8,10 @@ from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 REQUEST_BODY = """
 {
     "title": "string",
-    "category_id": 1,
+    "category_id": 10,
     "sub_category_id": 1,
-    "severity": [
-        "HIGH"
-    ],
+    "severity": 
+        "HIGH",
     "description": "string",
     "attachments": [
         "string"
@@ -38,7 +37,17 @@ class TestCase01CreateObservationAPITestCase(CustomAPITestCase):
     url_suffix = URL_SUFFIX
     test_case_dict = TEST_CASE
 
+    def setupUser(self, username, password):
+        super(TestCase01CreateObservationAPITestCase, self).setupUser(
+            username=username, password=password
+    )
+
+
     def test_case(self):
+
+        from reporting_portal.tests.factories.storage_factories \
+            import CategoryFactory
+        CategoryFactory.create()
         self.default_test_case() # Returns response object.
         # Which can be used for further response object checks.
         # Add database state checks here.

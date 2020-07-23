@@ -19,9 +19,10 @@ class Status(BaseEnumClass, enum.Enum):
     ACKNOWLEDGE_BY = "ACKNOWLEDGE_BY"
     RESOLVED = "RESOLVED"
     CLOSED = "CLOSED"
+    REPORTED = 'REPORTED'
 
 
-class SEVERITY(BaseEnumClass, enum.Enum):
+class Severity(BaseEnumClass, enum.Enum):
     HIGH = "HIGH"
     LOW = "LOW"
     WARNING = "WARNING"

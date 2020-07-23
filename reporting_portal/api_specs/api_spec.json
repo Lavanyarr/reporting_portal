@@ -131,19 +131,15 @@
                         "format": "date"
                    },
                     "severity": {
-                        "type": "array",
-                        "items": {
-                            "type": "string",
+                          "type": "string",
                             "enum": [
                                 "HIGH",
                                 "LOW",
                                 "WARNING"
                             ]
-                        }
                     },
                     "status": {
-                        "type": "array",
-                        "items": {
+
                             "type": "string",
                             "enum": [
                                 "ALL",
@@ -152,7 +148,7 @@
                                 "RESOLVED",
                                 "ACKNOWLEDGED_BY_RP"
                             ]
-                        }
+
                     },
                     "due_date": {
                         "type": "string",
@@ -392,15 +388,12 @@
                         "format": "int64"
                     },
                     "severity": {
-                        "type": "array",
-                        "items": {
-                            "type": "string",
+                         "type": "string",
                             "enum": [
                                 "HIGH",
                                 "LOW",
                                 "WARNING"
                             ]
-                        }
                     },
                     "description": {
                         "type": "string"
@@ -429,8 +422,7 @@
                         "format": "int64"
                     },
                     "status": {
-                        "type": "array",
-                        "items": {
+
                             "type": "string",
                             "enum": [
                                 "REPORTED",
@@ -439,7 +431,7 @@
                                 "RESOLVED",
                                 "ACKNOWLEDGED_BY_RP"
                             ]
-                        }
+
                     },
                     "assigned_to": {
                         "type": "integer",
@@ -491,7 +483,7 @@
                 }
             },
             "CreateObservation": {
-                "name": "create observation",
+                "name": "create_observation",
                 "in": "body",
                 "description": "create a observation",
                 "schema": {
@@ -499,7 +491,7 @@
                 }
             },
             "UpdateObservation": {
-                 "name": "update observation",
+                 "name": "update_observation",
                 "in": "body",
                 "description": "update a observation",
                 "schema": {
@@ -680,7 +672,7 @@
             },
             "/get_observation_details/v1": {
                 "get": {
-                    "summary": "Get Observations Details",
+                    "summary": "Get Observations_Details",
                     "description": "Get observations Details which are submitted",
                     "operationId": "get_observations_details",
                     "security": [{
@@ -728,7 +720,7 @@
             },
             "/update_observation/v1": {
                 "put": {
-                    "summary": "Update Observation",
+                    "summary": "Update_Observation",
                     "description": "update a observation which is submitted",
                     "operationId": "update_observation",
                      "security": [{

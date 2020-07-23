@@ -7,9 +7,10 @@ from snapshottest import Snapshot
 
 snapshots = Snapshot()
 
-snapshots['TestCase02CreateUserAPITestCase::test_case status'] = 200
+snapshots['TestCase02CreateUserAPITestCase::test_case status'] = 404
 
 snapshots['TestCase02CreateUserAPITestCase::test_case body'] = {
+    'https_status_code': 404,
     'res_status': 'INVALID_USERNAME',
     'response': 'username is invalid, try to give valid username'
 }
@@ -17,7 +18,7 @@ snapshots['TestCase02CreateUserAPITestCase::test_case body'] = {
 snapshots['TestCase02CreateUserAPITestCase::test_case header_params'] = {
     'allow': (
         'Allow',
-        'OPTIONS, POST'
+        'POST, OPTIONS'
     ),
     'content-language': (
         'Content-Language',
@@ -25,7 +26,7 @@ snapshots['TestCase02CreateUserAPITestCase::test_case header_params'] = {
     ),
     'content-length': (
         'Content-Length',
-        '97'
+        '123'
     ),
     'content-type': (
         'Content-Type',

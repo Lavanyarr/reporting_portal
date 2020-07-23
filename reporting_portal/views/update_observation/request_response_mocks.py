@@ -3,9 +3,7 @@
 REQUEST_BODY_JSON = """
 {
     "observation_id": 1,
-    "status": [
-        "REPORTED"
-    ],
+    "status": "REPORTED",
     "assigned_to": 1,
     "due_date_privacy": true
 }

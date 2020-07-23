@@ -3,7 +3,7 @@ import json
 import pytest
 from reporting_portal.presenters.category_presenter_implementation import \
     CategoryPresenterImplementation
-from reporting_portal.interactors.storages.dtos import \
+from reporting_portal.interactors.presenters.dtos import \
     CategoryWithSubCategoryDTO
 from reporting_portal.tests.factories.dto_factories import (
     CategoryDTOFactory,

@@ -7,15 +7,15 @@ from snapshottest import Snapshot
 
 snapshots = Snapshot()
 
-snapshots['TestCase02CreateUserAPITestCase::test_case status'] = 404
+snapshots['TestCase02CreateObservationAPITestCase::test_case status'] = 404
 
-snapshots['TestCase02CreateUserAPITestCase::test_case body'] = {
+snapshots['TestCase02CreateObservationAPITestCase::test_case body'] = {
     'https_status_code': 404,
-    'res_status': 'INVALID_PASSWORD',
-    'response': 'password is invalid, try to give valid password'
+    'res_status': 'INVALID_SUBCATEGORY_ID',
+    'response': 'subcategory_id is invalid try to give valid subcategory_id for given category_id'
 }
 
-snapshots['TestCase02CreateUserAPITestCase::test_case header_params'] = {
+snapshots['TestCase02CreateObservationAPITestCase::test_case header_params'] = {
     'allow': (
         'Allow',
         'POST, OPTIONS'
@@ -26,7 +26,7 @@ snapshots['TestCase02CreateUserAPITestCase::test_case header_params'] = {
     ),
     'content-length': (
         'Content-Length',
-        '123'
+        '162'
     ),
     'content-type': (
         'Content-Type',
