@@ -1,8 +1,12 @@
 from .category import Category
 from .subcategory import SubCategory
+from .attachments import Attachments
+from .observation import Observation
 __all__ = [
     "Category",
-    "SubCategory"
+    "SubCategory",
+    "Observation",
+    "Attachments"
 ]
 
 # class DummyModel(AbstractDateTimeModel):

@@ -1,4 +1,9 @@
 from typing import List
+
+from reporting_portal.exceptions.exceptions import (
+    InvalidCategoryId,
+    InvalidSubCategoryId
+)
 from reporting_portal.interactors.storages.storage_interface import StorageInterface
 from reporting_portal.interactors.storages.dtos import (
     CategoryDTO,
@@ -6,8 +11,11 @@ from reporting_portal.interactors.storages.dtos import (
 )
 from reporting_portal.models import (
     Category,
-    SubCategory
+    SubCategory,
+    Observation,
+    Attachments
 )
+
 
 class StorageImplementation(StorageInterface):
 
@@ -37,7 +45,7 @@ class StorageImplementation(StorageInterface):
         subcategories_list = []
         for subcategory in subcategories_obj:
             subcategory_dto = SubCategoryDTO(
-                category_id = subcategory.category,
+                category_id=subcategory.category.id,
                 id=subcategory.id,
                 name=subcategory.name
             )
@@ -45,13 +53,24 @@ class StorageImplementation(StorageInterface):
         return subcategories_list
 
     def validate_category_id(self, category_id: int):
-        pass
+        try:
+            category = Category.objects.get(id=category_id)
+        except Category.DoesNotExist:
+            raise InvalidCategoryId
 
     def validate_subcategory_id(self, category_id: int, subcategory_id: int):
-        pass
+        try:
+            SubCategory.objects.get(id=subcategory_id,
+                                    category_id=category_id)
+        except SubCategory.DoesNotExist:
+            raise InvalidSubCategoryId
 
     def create_observation(self, observation_dto: ObservationDTO):
-        pass
 
+        observation_obj = Observation.objects.create(title=observation_dto.title,
+                                                     description=observation_dto.description,
+                                                     category_id=observation_dto.category_id,
+                                                     subcategory_id=observation_dto.subcategory_id,
+                                                     severity=observation_dto.severity)
 
-
+        Attachments.objects.create(observation_id=observation_obj.id)

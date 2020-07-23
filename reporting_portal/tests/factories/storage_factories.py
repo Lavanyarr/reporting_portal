@@ -19,5 +19,6 @@ class SubCategoryFactory(factory.django.DjangoModelFactory):
 
     name = factory.sequence(lambda x: "sub_category_{0}".format(x + 1))
     category = factory.SubFactory(CategoryFactory)
+    rp = factory.sequence(lambda x: x+1)
 
 

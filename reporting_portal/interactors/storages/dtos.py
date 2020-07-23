@@ -2,7 +2,7 @@ import dataclasses
 
 from typing import List
 
-from reporting_portal.constants.enums import Severity
+from reporting_portal.constants.enums import SEVERITY
 
 
 @dataclasses.dataclass()
@@ -24,7 +24,7 @@ class CategoryWithSubCategoryDTO:
     subcategory_dto: SubCategoryDTO
 
 
-severity = Severity.get_list_of_tuples()
+severity = SEVERITY.get_list_of_tuples()
 
 
 @dataclasses.dataclass()

@@ -7,13 +7,10 @@ from snapshottest import GenericRepr, Snapshot
 
 snapshots = Snapshot()
 
-snapshots['TestGetCategories.test_subcategories_when_category_ids_are_given subcategory_dto'] = [
-]
-
 snapshots['TestGetCategories.test_subcategories_when_category_as_no_subcategories subcategory_dto'] = [
 ]
 
 snapshots['TestGetCategories.test_subcategories_when_category_have_subcategories subcategory_dto'] = [
-    GenericRepr("SubCategoryDTO(category_id=<Category: Category object (1)>, id=1, name='sub_category_1')"),
-    GenericRepr("SubCategoryDTO(category_id=<Category: Category object (1)>, id=2, name='sub_category_2')")
+    GenericRepr("SubCategoryDTO(category_id=1, id=1, name='sub_category_1')"),
+    GenericRepr("SubCategoryDTO(category_id=1, id=2, name='sub_category_2')")
 ]

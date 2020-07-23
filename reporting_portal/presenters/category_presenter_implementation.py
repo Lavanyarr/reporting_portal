@@ -17,7 +17,6 @@ class CategoryPresenterImplementation(CategoriesPresenterInterface):
         )
         return response_object
 
-
     def get_categories(self, response_dto):
         categories_list = []
         category_dto = response_dto.category_dto
@@ -34,9 +33,8 @@ class CategoryPresenterImplementation(CategoriesPresenterInterface):
 
     def get_subcategories(self, category_id, subcategory_dto):
         sub_categories_list = []
-
         for sub_category in subcategory_dto:
-            if category_id == sub_category.category_id.id:
+            if category_id == sub_category.category_id:
                 sub_category_dict = self.get_sub_category_details(sub_category)
                 sub_categories_list.append(sub_category_dict)
         return sub_categories_list
@@ -45,7 +43,6 @@ class CategoryPresenterImplementation(CategoriesPresenterInterface):
     def get_sub_category_details(subcategory):
         sub_category_dict = {
             "id": subcategory.id,
-
             "name": subcategory.name
         }
         return sub_category_dict

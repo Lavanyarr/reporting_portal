@@ -1,10 +1,3 @@
-'''
-
-TODO: categories are not there
-TODO: categories are therer but sub categories are not therer
-TODO: both are present
-'''
-
 import json
 
 import pytest
@@ -12,9 +5,9 @@ from reporting_portal.presenters.category_presenter_implementation import \
     CategoryPresenterImplementation
 from reporting_portal.interactors.storages.dtos import \
     CategoryWithSubCategoryDTO
-from reporting_portal.tests.factories.storage_factories import (
-    CategoryFactory,
-    SubCategoryFactory
+from reporting_portal.tests.factories.dto_factories import (
+    CategoryDTOFactory,
+    SubCategoryDTOFactory
 )
 
 
@@ -43,8 +36,8 @@ class TestCategoriesWithSubCategoriesPresenter:
         # arrange
         presenter = CategoryPresenterImplementation()
 
-        CategoryFactory.reset_sequence()
-        category = CategoryFactory.create_batch(1)
+        CategoryDTOFactory.reset_sequence()
+        category = CategoryDTOFactory.create_batch(1)
 
         response_dto = CategoryWithSubCategoryDTO(
             category_dto=category,
@@ -62,10 +55,10 @@ class TestCategoriesWithSubCategoriesPresenter:
         # arrange
         presenter = CategoryPresenterImplementation()
 
-        CategoryFactory.reset_sequence()
-        category = CategoryFactory.create_batch(1)
-        SubCategoryFactory.reset_sequence()
-        subcategory = SubCategoryFactory.create_batch(2, category_id=category[0])
+        CategoryDTOFactory.reset_sequence()
+        category = CategoryDTOFactory.create_batch(1)
+        SubCategoryDTOFactory.reset_sequence()
+        subcategory = SubCategoryDTOFactory.create_batch(2, category_id=1)
 
         response_dto = CategoryWithSubCategoryDTO(
             category_dto=category,

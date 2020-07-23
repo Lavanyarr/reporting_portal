@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 from snapshottest import Snapshot
 
+
 snapshots = Snapshot()
 
 snapshots['TestCategoriesWithSubCategoriesPresenter.test_categories_when_there_are_no_categories empty_dict'] = {
@@ -11,8 +12,18 @@ snapshots['TestCategoriesWithSubCategoriesPresenter.test_categories_when_there_a
     ]
 }
 
-snapshots[
-    'TestCategoriesWithSubCategoriesPresenter.test_categories_when_there_are_categories categories_with_sub_categories_dto'] = {
+snapshots['TestCategoriesWithSubCategoriesPresenter.test_categories_when_there_are_categories_but_no_subcategories categories_with_empty_sub_categories_dto'] = {
+    'categories': [
+        {
+            'id': 1,
+            'name': 'category_1',
+            'subcategories': [
+            ]
+        }
+    ]
+}
+
+snapshots['TestCategoriesWithSubCategoriesPresenter.test_categories_when_there_are_categories categories_with_sub_categories_dto'] = {
     'categories': [
         {
             'id': 1,
@@ -20,24 +31,12 @@ snapshots[
             'subcategories': [
                 {
                     'id': 1,
-                    'name': 'sub_category_1'
+                    'name': 'category_1'
                 },
                 {
                     'id': 2,
-                    'name': 'sub_category_2'
+                    'name': 'category_2'
                 }
-            ]
-        }
-    ]
-}
-
-snapshots[
-    'TestCategoriesWithSubCategoriesPresenter.test_categories_when_there_are_categories_but_no_subcategories categories_with_empty_sub_categories_dto'] = {
-    'categories': [
-        {
-            'id': 1,
-            'name': 'category_1',
-            'subcategories': [
             ]
         }
     ]

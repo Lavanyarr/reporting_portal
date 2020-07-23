@@ -21,7 +21,7 @@ class Status(BaseEnumClass, enum.Enum):
     CLOSED = "CLOSED"
 
 
-class Severity(BaseEnumClass, enum.Enum):
+class SEVERITY(BaseEnumClass, enum.Enum):
     HIGH = "HIGH"
     LOW = "LOW"
     WARNING = "WARNING"

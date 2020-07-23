@@ -2,9 +2,10 @@ import factory
 
 from reporting_portal.interactors.storages.dtos import (
     CategoryDTO,
+    SubCategoryDTO,
     ObservationDTO
 )
-from reporting_portal.constants.enums import Severity
+from reporting_portal.constants.enums import SEVERITY
 
 
 class CategoryDTOFactory(factory.Factory):
@@ -15,7 +16,16 @@ class CategoryDTOFactory(factory.Factory):
     name = factory.sequence(lambda x: "category_{0}".format(x + 1))
 
 
-severity = Severity.get_list_of_tuples()
+class SubCategoryDTOFactory(factory.Factory):
+    class Meta:
+        model = SubCategoryDTO
+
+    category_id = factory.sequence(lambda x: x + 1)
+    id = factory.sequence(lambda x: x + 1)
+    name = factory.sequence(lambda x: "category_{0}".format(x + 1))
+
+
+severity = SEVERITY.get_list_of_tuples()
 
 
 class ObservationFactory(factory.Factory):
