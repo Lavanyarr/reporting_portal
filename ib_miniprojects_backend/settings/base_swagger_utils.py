@@ -62,8 +62,8 @@ SWAGGER_UTILS = {
         }
     },
     "APPS": {
-        'reporting_portal_auth': {},
-        'reporting_portal': {}
+        'reporting_portal_auth': {"dsu_version": "1.0"},
+        'reporting_portal': {"dsu_version": "1.0"}
     },
     "HOST": os.environ.get('APIGATEWAY_ENDPOINT', '127.0.0.1:8080'),
 }

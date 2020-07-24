@@ -73,4 +73,7 @@ class StorageImplementation(StorageInterface):
                                                      subcategory_id=observation_dto.subcategory_id,
                                                      severity=observation_dto.severity)
 
-        Attachments.objects.create(observation_id=observation_obj.id)
+        if observation_dto.attachments:
+
+            for attachments in observation_dto.attachments:
+                Attachments.objects.create(name=attachments, observation_id=observation_obj.id)

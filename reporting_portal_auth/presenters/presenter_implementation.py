@@ -45,11 +45,11 @@ class PresenterImplementation(PresenterInterface):
             self, user_dto: UserDTO) -> response.HttpResponse:
         import json
         response_data = {
-            "access_token": user_dto.user_token_dto.access_token,
-            "refresh_token": user_dto.user_token_dto.refresh_token,
+            "Access_token": user_dto.user_token_dto.access_token,
+            "Refresh_token": user_dto.user_token_dto.refresh_token,
             "role": user_dto.user_role
         }
         data = json.dumps(response_data)
-        response = HttpResponse(data, status=201)
+        response = HttpResponse(data, status=200)
         return response
 

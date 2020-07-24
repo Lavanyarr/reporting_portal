@@ -1,43 +1,34 @@
 
 
-REQUEST_BODY_JSON = """
-{
-    "observation_id": 1
-}
-"""
-
 
 RESPONSE_200_JSON = """
-[
-    {
-        "observation_id": 1,
-        "title": "string",
-        "reported_on": "2099-12-31",
-        "severity": "HIGH",
-        "status": "ALL",
-        "due_date": "2099-12-31",
-        "show_due_date": true,
-        "description": "string",
-        "category": "string",
-        "subcategory": "string",
-        "assigned_to": {
-            "id": 1,
-            "name": "string"
-        },
-        "remaining_rps": [
-            {
-                "user_id": 1,
-                "name": "string",
-                "phone_no": 1,
-                "profile_pic": "string"
-            }
-        ],
-        "attachments": [
-            "string"
-        ],
-        "due_date_privacy": true
-    }
-]
+{
+    "observation_id": 1,
+    "title": "string",
+    "reported_on": "2099-12-31 00:00:00",
+    "severity": "HIGH",
+    "status": "ALL",
+    "due_date": "2099-12-31 00:00:00",
+    "description": "string",
+    "category": "string",
+    "subcategory": "string",
+    "assigned_to": {
+        "id": 1,
+        "name": "string"
+    },
+    "remaining_rps": [
+        {
+            "user_id": 1,
+            "name": "string",
+            "phone_no": 1,
+            "profile_pic": "string"
+        }
+    ],
+    "attachments": [
+        "string"
+    ],
+    "assigned_status": true
+}
 """
 
 RESPONSE_404_JSON = """

@@ -3,6 +3,11 @@ INVALID_OFFSET_LENGTH = (
     'greater than zero', 'INVALID_OFFSET_LENGTH'
 )
 INVALID_CATEGORY_ID = (
-    'category_id is invalid try to give valid category_id'
+    'category_id is invalid try to give valid category_id',
     'INVALID_CATEGORY_ID'
+)
+
+INVALID_OBSERVATION_IDS = (
+    'observation_ids are invalid try to give valid observation ids',
+    'INVALID_OBSERVATION_IDS'
 )

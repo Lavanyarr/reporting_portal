@@ -22,6 +22,6 @@ class Observation(models.Model):
     severity = models.CharField(max_length=20, choices=SEVERITY)
     status = models.CharField(max_length=20, choices=STATUS, default='REPORTED')
     assigned_to = models.IntegerField(null=True)
-    reported_on = models.DateField(null=True)
-    due_date = models.DateField(null=True)
+    reported_on = models.DateTimeField(null=True, auto_now=True)
+    due_date = models.DateTimeField(null=True)
     reported_by = models.IntegerField(null=True)

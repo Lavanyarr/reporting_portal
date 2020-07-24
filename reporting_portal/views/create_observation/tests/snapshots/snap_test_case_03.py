@@ -12,28 +12,24 @@ snapshots['TestCase03CreateObservationAPITestCase::test_case status'] = 201
 snapshots['TestCase03CreateObservationAPITestCase::test_case body'] = 'observation_created'
 
 snapshots['TestCase03CreateObservationAPITestCase::test_case header_params'] = {
-    'allow': (
-        'Allow',
-        'POST, OPTIONS'
-    ),
-    'content-language': (
+    'content-language': [
         'Content-Language',
         'en'
-    ),
-    'content-length': (
-        'Content-Length',
-        '21'
-    ),
-    'content-type': (
+    ],
+    'content-length': [
+        '21',
+        'Content-Length'
+    ],
+    'content-type': [
         'Content-Type',
         'text/html; charset=utf-8'
-    ),
-    'vary': (
-        'Vary',
-        'Accept-Language, Origin, Cookie'
-    ),
-    'x-frame-options': (
-        'X-Frame-Options',
-        'SAMEORIGIN'
-    )
+    ],
+    'vary': [
+        'Accept-Language, Origin, Cookie',
+        'Vary'
+    ],
+    'x-frame-options': [
+        'SAMEORIGIN',
+        'X-Frame-Options'
+    ]
 }

@@ -89,13 +89,7 @@
                     "profile_pic": {
                         "type": "string"
                     }
-                },
-                "required": [
-                    "user_id",
-                    "name",
-                    "phone_no",
-                    "profile_pic"
-                ]
+                }
             },
             "UserId":{
               "type": "object",
@@ -125,7 +119,7 @@
                     },
                     "reported_on": {
                         "type": "string",
-                        "format": "date"
+                        "format": "date-time"
                    },
                     "severity": {
                           "type": "string",
@@ -149,20 +143,16 @@
                     },
                     "due_date": {
                         "type": "string",
-                        "format":"date"
-                    },
-                    "show_due_date": {
-                        "type": "boolean"
+                        "format":"date-time"
                     }
+
             },
             "required": [
                 "observation_id",
                 "title",
                 "reported_on",
                 "severity",
-                "status",
-                "due_date",
-                "show_due_date"
+                "status"
             ]
 
         },
@@ -193,14 +183,21 @@
                             "assigned_to": {
                                 "$ref": "#/definitions/UserDetails"
                             },
+                            "show_due_date": {
+                        "type": "boolean"
+                    },
                             "messages_count": {
                                 "type": "integer",
                                 "format": "int64"
+                            },
+                            "assigned_status":{
+                              "type": "boolean"
                             }
                         },
                         "required":[
-                            "assigned_to",
-                            "messages_count"
+                            "messages_count",
+                            "show_due_date",
+                            "assigned_status"
                           ]
                     }
                 ]
@@ -340,9 +337,10 @@
                                     "type": "string"
                                 }
                             },
-                            "due_date_privacy": {
-                                "type": "boolean"
+                            "assigned_status":{
+                              "type": "boolean"
                             }
+
                         },
                         "required": [
                             "description",
@@ -350,25 +348,12 @@
                             "subcategory",
                             "assigned_to",
                             "remaining_rps",
-                            "attachments",
-                            "due_date_privacy"
+                            "attachments"
+
                         ]
                     }
 
                 ]
-            },
-            "ObservationId": {
-                "type": "object",
-                "properties": {
-                    "observation_id": {
-                        "type": "integer",
-                        "format": "int64"
-                    }
-                },
-                "required": [
-                    "observation_id"
-                ]
-
             },
             "CreateObservation": {
                 "type": "object",
@@ -405,7 +390,8 @@
                 "required": [
                     "title",
                     "severity",
-                    "description"
+                    "description",
+                    "attachments"
                 ]
             },
             "UpdateObservation": {
@@ -468,14 +454,7 @@
                     "$ref":"#/definitions/SortFilterDetails"
                 }
             },
-            "ObservationIdParameter": {
-                "name": "observationId",
-                "in": "body",
-                "description": "Observation id to get the observation details",
-                "schema": {
-                    "$ref": "#/definitions/ObservationId"
-                }
-            },
+
             "CreateObservation": {
                 "name": "create_observation",
                 "in": "body",
@@ -518,10 +497,9 @@
             "ObservationDetailsResponse": {
                 "description": "success response",
                 "schema": {
-                     "type":"array",
-                      "items":{
+
                         "$ref": "#/definitions/GetObservationDetails"
-                      }
+
 
                 }
 
@@ -664,7 +642,7 @@
                 }
 
             },
-            "/get_observation_details/v1": {
+            "/get_observation_details/{observation_id}/v1": {
                 "get": {
                     "summary": "Get Observations Details",
                     "description": "Get observations Details which are submitted",
@@ -674,10 +652,16 @@
                             "read"
                         ]
                     }],
-                    "parameters": [
-                        {
-                            "$ref": "#/parameters/ObservationIdParameter"
-                        }
+
+                      "parameters": [{
+                        "name": "observation_id",
+                        "in": "path",
+                        "required": true,
+                        "description": "observation_id to get details",
+                        "type": "integer",
+                        "format": "int64"
+                    }
+
                     ],
                     "responses": {
                         "200": {

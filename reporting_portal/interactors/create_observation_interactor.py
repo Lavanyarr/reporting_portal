@@ -28,7 +28,9 @@ class CreateObservationInteractor:
 
     def create_observation(self, observation_dto: ObservationDTO):
 
-        self.storage.validate_category_id(observation_dto.category_id)
-        self.storage.validate_subcategory_id(observation_dto.category_id,
+        if observation_dto.category_id:
+            self.storage.validate_category_id(observation_dto.category_id)
+        if observation_dto.subcategory_id:
+            self.storage.validate_subcategory_id(observation_dto.category_id,
                                              observation_dto.subcategory_id)
         self.storage.create_observation(observation_dto)

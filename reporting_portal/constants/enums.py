@@ -13,6 +13,7 @@ class CodeLanguage(BaseEnumClass, enum.Enum):
     python38_datascience = "PYTHON38_DATASCIENCE"
     python38_aiml = "PYTHON38_AIML"
 
+
 class Status(BaseEnumClass, enum.Enum):
     ALL = "ALL"
     ACTION_IN_PROGRESS = "ACTION_IN_PROGRESS"
@@ -26,3 +27,13 @@ class Severity(BaseEnumClass, enum.Enum):
     HIGH = "HIGH"
     LOW = "LOW"
     WARNING = "WARNING"
+
+
+class Sort(BaseEnumClass, enum.Enum):
+    ASC = "ASC"
+    DESC = "DESC"
+
+
+class SortField(BaseEnumClass, enum.Enum):
+    REPORTED_ON = "REPORTED_ON"
+    DUE_DATE = "DUE_DATE"

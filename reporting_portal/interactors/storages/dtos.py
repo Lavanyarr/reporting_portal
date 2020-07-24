@@ -1,8 +1,14 @@
 import dataclasses
+import datetime
 
 from typing import List
 
-from reporting_portal.constants.enums import Severity
+from reporting_portal.constants.enums import (
+    Severity,
+    Status,
+    Sort,
+    SortField
+)
 
 
 @dataclasses.dataclass()
@@ -25,6 +31,7 @@ class CategoryWithSubCategoryDTO:
 
 
 SEVERITY = Severity.get_list_of_tuples()
+STATUS = Status.get_list_of_tuples()
 
 
 @dataclasses.dataclass()
@@ -35,3 +42,25 @@ class ObservationDTO:
     severity: SEVERITY
     description: str
     attachments: List[str]
+
+
+@dataclasses.dataclass()
+class ObservationDetailsDTO:
+    title: str
+    severity: SEVERITY
+    status: STATUS
+    due_date: datetime
+    messages_count: int
+
+
+SORT = Sort.get_list_of_tuples()
+SORTFIELD = Sort.get_list_of_tuples()
+
+
+@dataclasses.dataclass()
+class ObservationInputDTO:
+    limit: str
+    offset: str
+    sort_type: SORT
+    filter_type: STATUS
+    sort_field: SORTFIELD
