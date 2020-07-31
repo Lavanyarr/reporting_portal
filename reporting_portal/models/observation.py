@@ -1,5 +1,3 @@
-
-
 from django.db import models
 from reporting_portal.models import (
     Category,
@@ -10,9 +8,9 @@ from reporting_portal.constants.enums import (
     Status
 )
 
-
 SEVERITY = Severity.get_list_of_tuples()
-STATUS =  Status.get_list_of_tuples()
+STATUS = Status.get_list_of_tuples()
+
 
 class Observation(models.Model):
     title = models.CharField(max_length=20)

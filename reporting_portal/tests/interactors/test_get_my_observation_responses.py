@@ -11,12 +11,17 @@ invalid cases: offset negative value
 
 from unittest.mock import (
     create_autospec,
-    Mock
+    Mock, patch
 )
 import pytest
 
+from reporting_portal.interactors.get_observation_details_dto import GetObservationDTOInteractor
 from reporting_portal.interactors.storages.dtos import ObservationInputDTO
-
+from reporting_portal.constants.enums import (
+    SortField,
+    Status,
+    Sort
+)
 
 class TestGetMyObservations:
 
@@ -46,9 +51,9 @@ class TestGetMyObservations:
         observation_dto = ObservationInputDTO(
             limit=-1,
             offset=10,
-            sort_type="ASC",
-            filter_type="ALL",
-            sort_field="REPORTED_ON"
+            sort_type=Sort.ASC.value,
+            filter_type=Status.ALL.value,
+            sort_field=SortField.REPORTED_ON.value
         )
         invalid_limit_obj = Mock()
         presenter_mock.prepare_invalid_limit_response.return_value = invalid_limit_obj
@@ -74,9 +79,10 @@ class TestGetMyObservations:
         observation_dto = ObservationInputDTO(
             limit=1,
             offset=-1,
-            sort_type="ASC",
-            filter_type="ALL",
-            sort_field="REPORTED_ON"
+            sort_type=Sort.ASC.value,
+            filter_type=Status.ALL.value,
+            sort_field=SortField.REPORTED_ON.value
+
         )
         invalid_offset_obj = Mock()
         presenter_mock.prepare_invalid_offset_response.return_value = invalid_offset_obj
@@ -103,8 +109,9 @@ class TestGetMyObservations:
             limit=1,
             offset=1,
             sort_type="A",
-            filter_type="ALL",
-            sort_field="REPORTED_ON"
+            filter_type=Status.ALL.value,
+            sort_field=SortField.REPORTED_ON.value
+
         )
         invalid_sort_type = Mock()
         presenter_mock.prepare_invalid_sort_type_response.return_value = invalid_sort_type
@@ -130,9 +137,10 @@ class TestGetMyObservations:
         observation_dto = ObservationInputDTO(
             limit=1,
             offset=1,
-            sort_type="ASC",
+            sort_type=Sort.ASC.value,
             filter_type="A",
-            sort_field="REPORTED_ON"
+            sort_field=SortField.REPORTED_ON.value
+
         )
         invalid_filter_type = Mock()
         presenter_mock.prepare_invalid_filter_type_response.return_value = invalid_filter_type
@@ -158,8 +166,8 @@ class TestGetMyObservations:
         observation_dto = ObservationInputDTO(
             limit=1,
             offset=1,
-            sort_type="ASC",
-            filter_type="ALL",
+            sort_type=Sort.ASC.value,
+            filter_type=Status.ALL.value,
             sort_field="R"
         )
         invalid_sort_field = Mock()
@@ -174,3 +182,135 @@ class TestGetMyObservations:
         # assert
         presenter_mock.prepare_invalid_sort_field_response.assert_called_once()
         assert response == invalid_sort_field
+
+    def test_get_my_observation_in_dec_when_given_sort_field_is_reported_on(self, storage_mock, presenter_mock):
+        # arrange
+        from reporting_portal.interactors.get_my_observation_interactor \
+            import GetMyObservationInteractor
+
+        interactor = GetMyObservationInteractor(
+            observation_storage=storage_mock
+        )
+        observation_dto = ObservationInputDTO(
+            limit=1,
+            offset=5,
+            sort_type=Sort.DESC.value,
+            filter_type=Status.REPORTED.value,
+            sort_field=SortField.REPORTED_ON.value
+        )
+
+        # act
+        response = interactor.get_my_observation_wrapper(
+            observation_dto=observation_dto,
+            observation_presenter=presenter_mock
+        )
+
+        # assert
+        storage_mock.get_my_observation_in_dec_when_given_sort_field_is_reported_on.assert_called_once_with(
+            observation_dto)
+
+    def test_get_my_observation_in_dec_when_given_sort_field_is_due_date(self, storage_mock, presenter_mock):
+        # arrange
+        from reporting_portal.interactors.get_my_observation_interactor \
+            import GetMyObservationInteractor
+
+        interactor = GetMyObservationInteractor(
+            observation_storage=storage_mock
+        )
+        observation_dto = ObservationInputDTO(
+            limit=1,
+            offset=5,
+            sort_type=Sort.DESC.value,
+            filter_type=Status.REPORTED.value,
+            sort_field=SortField.DUE_DATE.value
+        )
+
+        # act
+        response = interactor.get_my_observation_wrapper(
+            observation_dto=observation_dto,
+            observation_presenter=presenter_mock
+        )
+
+        # assert
+        storage_mock.get_my_observation_in_dec_when_given_sort_field_is_due_date.assert_called_once_with(
+            observation_dto)
+
+    def test_get_my_observation_when_given_sort_field_is_reported_on(self, storage_mock, presenter_mock):
+        # arrange
+        from reporting_portal.interactors.get_my_observation_interactor \
+            import GetMyObservationInteractor
+
+        interactor = GetMyObservationInteractor(
+            observation_storage=storage_mock
+        )
+        observation_dto = ObservationInputDTO(
+            limit=1,
+            offset=5,
+            sort_type=Sort.ASC.value,
+            filter_type=Status.REPORTED.value,
+            sort_field=SortField.REPORTED_ON.value
+        )
+
+        # act
+        response = interactor.get_my_observation_wrapper(
+            observation_dto=observation_dto,
+            observation_presenter=presenter_mock
+        )
+
+        # assert
+        storage_mock.get_my_observation_when_given_sort_field_is_reported_on.assert_called_once_with(
+            observation_dto)
+    def get_my_observation_when_given_sort_field_is_due_date(self, storage_mock, presenter_mock):
+        # arrange
+        from reporting_portal.interactors.get_my_observation_interactor \
+            import GetMyObservationInteractor
+
+        interactor = GetMyObservationInteractor(
+            observation_storage=storage_mock
+        )
+        observation_dto = ObservationInputDTO(
+            limit=1,
+            offset=5,
+            sort_type=Sort.ASC.value,
+            filter_type=Status.REPORTED.value,
+            sort_field=SortField.DUE_DATE.value
+        )
+
+        # act
+        response = interactor.get_my_observation_wrapper(
+            observation_dto=observation_dto,
+            observation_presenter=presenter_mock
+        )
+
+        # assert
+        storage_mock.get_my_observation_when_given_sort_field_is_due_date.assert_called_once_with(
+            observation_dto)
+
+    @patch.object(GetObservationDTOInteractor, 'get_my_observation')
+    def get_my_observation_when_observation_ids_are_given(self, observation_interactor,
+                                                          storage_mock, presenter_mock):
+        # arrange
+        from reporting_portal.interactors.get_my_observation_interactor \
+            import GetMyObservationInteractor
+
+        interactor = GetMyObservationInteractor(
+            observation_storage=storage_mock
+        )
+        observation_dto = ObservationInputDTO(
+            limit=1,
+            offset=5,
+            sort_type=Sort.ASC.value,
+            filter_type=Status.REPORTED.value,
+            sort_field=SortField.DUE_DATE.value
+        )
+        #return observation_interactor.return_value =
+
+        # act
+        response = interactor.get_my_observation_wrapper(
+            observation_dto=observation_dto,
+            observation_presenter=presenter_mock
+        )
+
+        # assert
+        storage_mock.get_my_observation_when_given_sort_field_is_due_date.assert_called_once_with(
+            observation_dto)

@@ -17,7 +17,7 @@ class CodeLanguage(BaseEnumClass, enum.Enum):
 class Status(BaseEnumClass, enum.Enum):
     ALL = "ALL"
     ACTION_IN_PROGRESS = "ACTION_IN_PROGRESS"
-    ACKNOWLEDGE_BY = "ACKNOWLEDGE_BY"
+    ACKNOWLEDGED_BY_RP = "ACKNOWLEDGE_BY"
     RESOLVED = "RESOLVED"
     CLOSED = "CLOSED"
     REPORTED = 'REPORTED'

@@ -8,7 +8,7 @@ from reporting_portal.interactors.presenters.get_observation_presenter_interface
     import GetObservationPresenterInterface
 
 
-class GetObservationDTO:
+class GetObservationDTOInteractor:
 
     def __init__(self, observation_storage: ObservationStorageInterface):
         self.storage = observation_storage

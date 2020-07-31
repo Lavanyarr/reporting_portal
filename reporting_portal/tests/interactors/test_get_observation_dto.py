@@ -16,7 +16,7 @@ import pytest
 from unittest.mock import create_autospec
 
 from reporting_portal.exceptions.exceptions import InvalidObservationIds
-from reporting_portal.interactors.get_observation_details_dto import GetObservationDTO
+from reporting_portal.interactors.get_observation_details_dto import GetObservationDTOInteractor
 from reporting_portal.tests.factories.dto_factories import ObservationDetailsFactory
 
 
@@ -44,7 +44,7 @@ class TestGetObservationDTO:
         invalid_observation_ids = [3, 4]
         valid_observation_ids = [3]
 
-        interactor = GetObservationDTO(
+        interactor = GetObservationDTOInteractor(
             observation_storage=storage_mock
         )
         storage_mock.get_valid_observation_ids.return_value = valid_observation_ids
@@ -69,7 +69,7 @@ class TestGetObservationDTO:
         observation_ids = [1,2]
         valid_observation_ids = [1, 2]
 
-        interactor = GetObservationDTO(
+        interactor = GetObservationDTOInteractor(
             observation_storage=storage_mock
         )
         storage_mock.get_valid_observation_ids.return_value = valid_observation_ids

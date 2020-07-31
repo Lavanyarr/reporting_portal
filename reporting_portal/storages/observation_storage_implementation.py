@@ -33,3 +33,36 @@ class ObservationStorageImplementation(ObservationStorageInterface):
             observation_dto_list.append(observation_dto)
 
         return observation_dto_list
+
+    def get_my_observation_in_dec_when_given_sort_field_is_reported_on(
+            self, observation_dto: ObservationDetailsDTO):
+
+        offset = observation_dto.offset
+        limit = observation_dto.limit
+        observation_objs = Observation.objects.filter(
+            status=observation_dto.filter_type).order_by('-reported_on')[limit: offset + limit]
+        return observation_objs
+
+    def get_my_observation_in_dec_when_given_sort_field_is_due_date(
+            self, observation_dto: ObservationDetailsDTO):
+        offset = observation_dto.offset
+        limit = observation_dto.limit
+        observation_objs = Observation.objects.filter(
+            status=observation_dto.filter_type).order_by('-due_date')[limit: offset + limit]
+        return observation_objs
+
+    def get_my_observation_when_given_sort_field_is_reported_on(
+            self, observation_dto: ObservationDetailsDTO):
+        offset = observation_dto.offset
+        limit = observation_dto.limit
+        observation_objs = Observation.objects.filter(
+            status=observation_dto.filter_type).order_by('reported_on')[limit: offset + limit]
+        return observation_objs
+
+    def get_my_observation_when_given_sort_field_is_due_date(
+            self, observation_dto: ObservationDetailsDTO):
+        offset = observation_dto.offset
+        limit = observation_dto.limit
+        observation_objs = Observation.objects.filter(
+            status=observation_dto.filter_type).order_by('due_date')[limit: offset + limit]
+        return observation_objs
