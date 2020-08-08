@@ -12,4 +12,5 @@ class TestInvalidObservationIds:
         response = presenter.prepare_invalid_observation_ids_response()
 
         # assert
+
         snapshot.assert_match(response.content, 'Invalid_observation_ids')

@@ -46,11 +46,20 @@ class ObservationDTO:
 
 @dataclasses.dataclass()
 class ObservationDetailsDTO:
+    id: int
     title: str
     severity: SEVERITY
     status: STATUS
-    due_date: datetime
+    due_date: str
     messages_count: int
+    reported_on : datetime
+    assigned_to: str
+    is_public: bool
+
+@dataclasses.dataclass()
+class ObservationDetailsWithCount:
+    total_count: int
+    observation_details: ObservationDetailsDTO
 
 
 SORT = Sort.get_list_of_tuples()
@@ -64,3 +73,17 @@ class ObservationInputDTO:
     sort_type: SORT
     filter_type: STATUS
     sort_field: SORTFIELD
+
+
+@dataclasses.dataclass()
+class UserDTO:
+    user_id: int
+    name: str
+    profile_pic: str
+    phone_no: int
+
+@dataclasses.dataclass()
+class UserObservationDTO:
+    common_dto: ObservationDetailsWithCount
+    assigned_to: UserDTO
+

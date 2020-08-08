@@ -16,12 +16,15 @@ from unittest.mock import (
 import pytest
 
 from reporting_portal.interactors.get_observation_details_dto import GetObservationDTOInteractor
-from reporting_portal.interactors.storages.dtos import ObservationInputDTO
+from reporting_portal.interactors.storages.dtos import ObservationInputDTO, UserObservationDTO, \
+    ObservationDetailsWithCount
 from reporting_portal.constants.enums import (
     SortField,
     Status,
     Sort
 )
+from reporting_portal.tests.factories.dto_factories import ObservationDetailsFactory, ObservationDetailsWithCountFactory
+
 
 class TestGetMyObservations:
 
@@ -183,7 +186,8 @@ class TestGetMyObservations:
         presenter_mock.prepare_invalid_sort_field_response.assert_called_once()
         assert response == invalid_sort_field
 
-    def test_get_my_observation_in_dec_when_given_sort_field_is_reported_on(self, storage_mock, presenter_mock):
+    def test_get_my_observation_in_dec_when_given_sort_field_is_reported_on(self, mocker,
+                                                                            storage_mock, presenter_mock):
         # arrange
         from reporting_portal.interactors.get_my_observation_interactor \
             import GetMyObservationInteractor
@@ -198,6 +202,10 @@ class TestGetMyObservations:
             filter_type=Status.REPORTED.value,
             sort_field=SortField.REPORTED_ON.value
         )
+        user_ids = [1, 2, 3]
+        from reporting_portal.tests.common_fixtures import prepare_get_user_dtos_mock
+        get_user_dtos = prepare_get_user_dtos_mock(mocker, user_ids)
+        requested_user_dto = get_user_dtos.return_value
 
         # act
         response = interactor.get_my_observation_wrapper(
@@ -209,7 +217,8 @@ class TestGetMyObservations:
         storage_mock.get_my_observation_in_dec_when_given_sort_field_is_reported_on.assert_called_once_with(
             observation_dto)
 
-    def test_get_my_observation_in_dec_when_given_sort_field_is_due_date(self, storage_mock, presenter_mock):
+    def test_get_my_observation_in_dec_when_given_sort_field_is_due_date(self, mocker,
+                                                                         storage_mock, presenter_mock):
         # arrange
         from reporting_portal.interactors.get_my_observation_interactor \
             import GetMyObservationInteractor
@@ -224,6 +233,10 @@ class TestGetMyObservations:
             filter_type=Status.REPORTED.value,
             sort_field=SortField.DUE_DATE.value
         )
+        user_ids = [1, 2, 3]
+        from reporting_portal.tests.common_fixtures import prepare_get_user_dtos_mock
+        get_user_dtos = prepare_get_user_dtos_mock(mocker, user_ids)
+        requested_user_dto = get_user_dtos.return_value
 
         # act
         response = interactor.get_my_observation_wrapper(
@@ -235,7 +248,8 @@ class TestGetMyObservations:
         storage_mock.get_my_observation_in_dec_when_given_sort_field_is_due_date.assert_called_once_with(
             observation_dto)
 
-    def test_get_my_observation_when_given_sort_field_is_reported_on(self, storage_mock, presenter_mock):
+    def test_get_my_observation_when_given_sort_field_is_reported_on(self, mocker,
+                                                                     storage_mock, presenter_mock):
         # arrange
         from reporting_portal.interactors.get_my_observation_interactor \
             import GetMyObservationInteractor
@@ -250,6 +264,10 @@ class TestGetMyObservations:
             filter_type=Status.REPORTED.value,
             sort_field=SortField.REPORTED_ON.value
         )
+        user_ids = [1, 2, 3]
+        from reporting_portal.tests.common_fixtures import prepare_get_user_dtos_mock
+        get_user_dtos = prepare_get_user_dtos_mock(mocker, user_ids)
+        requested_user_dto = get_user_dtos.return_value
 
         # act
         response = interactor.get_my_observation_wrapper(
@@ -260,7 +278,9 @@ class TestGetMyObservations:
         # assert
         storage_mock.get_my_observation_when_given_sort_field_is_reported_on.assert_called_once_with(
             observation_dto)
-    def get_my_observation_when_given_sort_field_is_due_date(self, storage_mock, presenter_mock):
+
+    def test_get_my_observation_when_given_sort_field_is_due_date(self, mocker,
+                                                                  storage_mock, presenter_mock):
         # arrange
         from reporting_portal.interactors.get_my_observation_interactor \
             import GetMyObservationInteractor
@@ -275,6 +295,10 @@ class TestGetMyObservations:
             filter_type=Status.REPORTED.value,
             sort_field=SortField.DUE_DATE.value
         )
+        user_ids = [1, 2, 3]
+        from reporting_portal.tests.common_fixtures import prepare_get_user_dtos_mock
+        get_user_dtos = prepare_get_user_dtos_mock(mocker, user_ids)
+        requested_user_dto = get_user_dtos.return_value
 
         # act
         response = interactor.get_my_observation_wrapper(
@@ -286,9 +310,12 @@ class TestGetMyObservations:
         storage_mock.get_my_observation_when_given_sort_field_is_due_date.assert_called_once_with(
             observation_dto)
 
-    @patch.object(GetObservationDTOInteractor, 'get_my_observation')
-    def get_my_observation_when_observation_ids_are_given(self, observation_interactor,
-                                                          storage_mock, presenter_mock):
+    @patch.object(GetObservationDTOInteractor, 'get_observation_details_dto')
+    def test_get_my_observation_dtos_when_observation_ids_are_given(self,
+                                                                    observation_mock_obj,
+                                                                    mocker,
+                                                                    storage_mock,
+                                                                    presenter_mock):
         # arrange
         from reporting_portal.interactors.get_my_observation_interactor \
             import GetMyObservationInteractor
@@ -303,7 +330,14 @@ class TestGetMyObservations:
             filter_type=Status.REPORTED.value,
             sort_field=SortField.DUE_DATE.value
         )
-        #return observation_interactor.return_value =
+        observation_dtos = ObservationDetailsWithCountFactory.create_batch(5)
+        observation_mock_obj.return_value = observation_dtos
+        user_ids = [1, 2, 3]
+        from reporting_portal.tests.common_fixtures import prepare_get_user_dtos_mock
+        get_user_dtos = prepare_get_user_dtos_mock(mocker, user_ids)
+        requested_user_dto = get_user_dtos.return_value
+
+
 
         # act
         response = interactor.get_my_observation_wrapper(
@@ -314,3 +348,85 @@ class TestGetMyObservations:
         # assert
         storage_mock.get_my_observation_when_given_sort_field_is_due_date.assert_called_once_with(
             observation_dto)
+
+
+    @patch.object(GetObservationDTOInteractor, 'get_observation_details_dto')
+    def test_get_user_dtos_when_user_ids_are_given(self,
+                                                   observation_mock_obj,
+                                                   mocker,
+                                                   storage_mock,
+                                                   presenter_mock):
+        # arrange
+        from reporting_portal.interactors.get_my_observation_interactor \
+            import GetMyObservationInteractor
+
+        interactor = GetMyObservationInteractor(
+            observation_storage=storage_mock
+        )
+        observation_dto = ObservationInputDTO(
+            limit=1,
+            offset=5,
+            sort_type=Sort.ASC.value,
+            filter_type=Status.REPORTED.value,
+            sort_field=SortField.DUE_DATE.value
+        )
+        observation_dtos = ObservationDetailsWithCountFactory.create_batch(5)
+        observation_mock_obj.return_value = observation_dtos
+        user_ids = [1, 2, 3]
+        from reporting_portal.tests.common_fixtures import prepare_get_user_dtos_mock
+        get_user_dtos = prepare_get_user_dtos_mock(mocker, user_ids)
+        requested_user_dto = get_user_dtos.return_value
+        # act
+        response = interactor.get_my_observation_wrapper(
+            observation_dto=observation_dto,
+            observation_presenter=presenter_mock
+        )
+
+        # assert
+        storage_mock.get_my_observation_when_given_sort_field_is_due_date.assert_called_once_with(
+            observation_dto)
+
+
+    @patch.object(GetObservationDTOInteractor, 'get_observation_details_dto')
+    def test_get_user_observation_list(self,
+                                                   observation_mock_obj,
+                                                   mocker,
+                                                   storage_mock,
+                                                   presenter_mock):
+        # arrange
+        from reporting_portal.interactors.get_my_observation_interactor \
+            import GetMyObservationInteractor
+
+        interactor = GetMyObservationInteractor(
+            observation_storage=storage_mock
+        )
+        observation_dto = ObservationInputDTO(
+            limit=1,
+            offset=5,
+            sort_type=Sort.ASC.value,
+            filter_type=Status.REPORTED.value,
+            sort_field=SortField.DUE_DATE.value
+        )
+        observation_dtos = ObservationDetailsFactory.create_batch(5)
+        observation_mock_obj.return_value = observation_dtos
+        user_ids = [1, 2, 3]
+        from reporting_portal.tests.common_fixtures import prepare_get_user_dtos_mock
+        get_user_dtos = prepare_get_user_dtos_mock(mocker, user_ids)
+        requested_user_dto = get_user_dtos.return_value
+        user_total_observation_dto = UserObservationDTO(
+            common_dto=observation_dtos,
+            assigned_to=requested_user_dto
+        )
+        # act
+        response = interactor.get_my_observation_wrapper(
+            observation_dto=observation_dto,
+            observation_presenter=presenter_mock
+        )
+
+        # assert
+        storage_mock.get_my_observation_when_given_sort_field_is_due_date.assert_called_once_with(
+            observation_dto)
+        presenter_mock.prepare_my_observation_list.assert_called_once_with(
+            user_total_observation_dto)
+
+

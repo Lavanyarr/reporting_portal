@@ -67,11 +67,20 @@ class StorageImplementation(StorageInterface):
 
     def create_observation(self, observation_dto: ObservationDTO):
 
+        if observation_dto.category_id and observation_dto.subcategory_id:
+            rp = SubCategory.objects.filter(
+                id=observation_dto.category_id,
+                category=observation_dto.category_id).values_list('rp', flat=True)
+            assigned_rp = rp[0]
+        else:
+            assigned_rp = "Rp Not Assigned"
+
         observation_obj = Observation.objects.create(title=observation_dto.title,
                                                      description=observation_dto.description,
                                                      category_id=observation_dto.category_id,
                                                      subcategory_id=observation_dto.subcategory_id,
-                                                     severity=observation_dto.severity)
+                                                     severity=observation_dto.severity,
+                                                     assigned_to=assigned_rp)
 
         if observation_dto.attachments:
 

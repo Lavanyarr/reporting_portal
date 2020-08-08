@@ -37,6 +37,7 @@ class ObservationDetailsFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Observation
 
+
     title = factory.sequence(lambda x: "title_{0}".format(x + 1))
     category = factory.SubFactory(CategoryFactory)
     subcategory = factory.SubFactory(SubCategoryFactory)
@@ -46,3 +47,4 @@ class ObservationDetailsFactory(factory.django.DjangoModelFactory):
     reported_on = factory.LazyFunction(datetime.now)
     due_date = factory.LazyFunction(datetime.now)
     reported_by = factory.sequence(lambda x: x + 1)
+

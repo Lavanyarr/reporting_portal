@@ -142,15 +142,13 @@
 
                     },
                     "due_date": {
-                        "type": "string",
-                        "format":"date-time"
+                        "type": "string"
                     }
 
             },
             "required": [
                 "observation_id",
                 "title",
-                "reported_on",
                 "severity",
                 "status"
             ]
@@ -189,15 +187,11 @@
                             "messages_count": {
                                 "type": "integer",
                                 "format": "int64"
-                            },
-                            "assigned_status":{
-                              "type": "boolean"
                             }
                         },
                         "required":[
                             "messages_count",
-                            "show_due_date",
-                            "assigned_status"
+                            "show_due_date"
                           ]
                     }
                 ]
@@ -336,9 +330,6 @@
                                 "items": {
                                     "type": "string"
                                 }
-                            },
-                            "assigned_status":{
-                              "type": "boolean"
                             }
 
                         },

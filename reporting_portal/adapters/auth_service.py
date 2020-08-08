@@ -12,5 +12,5 @@ class AuthService:
     # we use this function in this app
 
     def get_user_dtos(self, user_ids: List[int]):
-        user_dtos = self.interface.get_user_dtos(user_ids)
+        user_dtos = self.interface.get_user_dtos(user_ids=user_ids)
         return user_dtos

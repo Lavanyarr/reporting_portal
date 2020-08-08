@@ -19,7 +19,7 @@ RESPONSE_200_JSON = """
             "reported_on": "2099-12-31 00:00:00",
             "severity": "HIGH",
             "status": "ALL",
-            "due_date": "2099-12-31 00:00:00",
+            "due_date": "string",
             "reported_by": {
                 "user_id": 1,
                 "name": "string",

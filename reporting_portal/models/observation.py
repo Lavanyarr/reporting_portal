@@ -22,4 +22,5 @@ class Observation(models.Model):
     assigned_to = models.IntegerField(null=True)
     reported_on = models.DateTimeField(null=True, auto_now=True)
     due_date = models.DateTimeField(null=True)
+    is_public = models.BooleanField(default=True)
     reported_by = models.IntegerField(null=True)

@@ -19,7 +19,7 @@ RESPONSE_200_JSON = """
             "reported_on": "2099-12-31 00:00:00",
             "severity": "HIGH",
             "status": "ALL",
-            "due_date": "2099-12-31 00:00:00",
+            "due_date": "string",
             "assigned_to": {
                 "user_id": 1,
                 "name": "string",
@@ -27,8 +27,7 @@ RESPONSE_200_JSON = """
                 "profile_pic": "string"
             },
             "show_due_date": true,
-            "messages_count": 1,
-            "assigned_status": true
+            "messages_count": 1
         }
     ]
 }

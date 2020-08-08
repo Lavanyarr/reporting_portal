@@ -8,7 +8,7 @@ RESPONSE_200_JSON = """
     "reported_on": "2099-12-31 00:00:00",
     "severity": "HIGH",
     "status": "ALL",
-    "due_date": "2099-12-31 00:00:00",
+    "due_date": "string",
     "description": "string",
     "category": "string",
     "subcategory": "string",
@@ -26,8 +26,7 @@ RESPONSE_200_JSON = """
     ],
     "attachments": [
         "string"
-    ],
-    "assigned_status": true
+    ]
 }
 """
 

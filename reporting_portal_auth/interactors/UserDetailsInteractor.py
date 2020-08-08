@@ -22,11 +22,10 @@ from reporting_portal_auth.interactors.presenters.user_dtos_presenter_interface 
 class UserDetailsInteractor:
 
     def __init__(self, storage: StorageInterface):
-        self.storage = StorageInterface
+        self.storage = storage
 
     def user_details_wrapper(self, user_ids: List[int],
                              presenter: UserDetailsPresenterInterface):
-
         try:
             response = self.user_details(user_ids=user_ids)
 
@@ -36,6 +35,5 @@ class UserDetailsInteractor:
         return response
 
     def user_details(self, user_ids: List[int]):
-
         user_dtos = self.storage.get_user_dtos(user_ids=user_ids)
         return user_dtos
